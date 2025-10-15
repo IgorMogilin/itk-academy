@@ -1,3 +1,4 @@
+from functools import wraps
 import unittest.mock
 from collections import OrderedDict
 
@@ -6,6 +7,7 @@ def lru_cache(func=None, *, maxsize=None):
     def decorator(func):
         cache = OrderedDict()
 
+        @wraps(func)
         def wrapper(*args, **kwargs):
             key = (args, tuple(sorted(kwargs.items())))
             if key in cache:
